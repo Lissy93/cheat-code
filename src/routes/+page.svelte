@@ -3,17 +3,33 @@
 	import Icon from '$/lib/Icon.svelte';
 	import type { ChatMessage } from '$/types/chat.types';
 
-	let messages = [
-		{ role: 'system', content: "Hey there! What's on your mind?" }
-	] satisfies ChatMessage[];
+	const tabs = ['Refactor', 'Find Bug', 'Explain', 'Generate'] as const;
+
 	let newMessage = '';
 	let loading = false;
 
+	type MessageLog = {
+		[tab in typeof tabs[number]]: ChatMessage[];
+	};
+
+	const messageLog: MessageLog = {
+		'Refactor': [{ role: 'system', content: 'hi' }],
+		'Find Bug': [{ role: 'system', content: '' }],
+		'Explain': [{ role: 'system', content: '' }],
+		'Generate': [{ role: 'system', content: '' }],
+	};
+
 	async function chat(event: Event) {
+
+		
+
 		event.preventDefault();
 		loading = true;
-		messages = [...messages, { role: 'user', content: newMessage }] satisfies ChatMessage[];
-		newMessage = '';
+
+		const messages = [
+			...messageLog[selectedTab],
+			{ role: 'user', content: newMessage }
+		] satisfies ChatMessage[];
 
 		const res = await fetch('/', {
 			method: 'POST',
@@ -24,11 +40,11 @@
 
 		loading = false;
 
-		messages = [...messages, chatGPTMessage] satisfies ChatMessage[];
+		messageLog[selectedTab] = [
+			...messageLog[selectedTab],
+			chatGPTMessage satisfies ChatMessage[],
+		];
 	}
-
-
-	const tabs = ['Refactor', 'Find Bug', 'Explain', 'Generate'] as const;
 
 	let selectedTab: typeof tabs[number] = 'Refactor';
 
@@ -68,6 +84,9 @@
 	};
 
 	$: tabTxt = descriptions[selectedTab];
+
+	$: answer = messageLog[selectedTab].reverse().find(msg => msg.role === 'assistant')?.content;
+
 </script>
 
 <main>
@@ -94,44 +113,26 @@
 	<!-- User input form, and submit button -->
 	<div class="user-input">
 		<div class="intro">{tabTxt.intro}</div>
-		<textarea rows="5" placeholder={tabTxt.placeholder} />
+		<textarea bind:value={newMessage} rows="5" placeholder={tabTxt.placeholder} />
 		<div class="submit-btn">
-			<button on:click={chat}>{tabTxt.btnText}</button>
+			<button disabled={loading} on:click={chat}>
+				{ loading ? 'Thinking...' : tabTxt.btnText}
+			</button>
 		</div>
 	</div>
 
 	<!-- Output -->
-	<div class="output"></div>
-</main>
-
-<div class="chatbox">
-	<div class="header">Let's Chat</div>
-	<div class="messages">
-		{#each messages as message}
-			{#if ['system', 'assistant'].indexOf(message.role) >= 0}
-				<div class="message">
-					<span class="sender">{message.role}:</span>
-					<span class="text"><SvelteMarkdown source={message.content} /></span>
-				</div>
-			{/if}
-			{#if message.role === 'user'}
-				<div class="message receiver">
-					<span class="text"><SvelteMarkdown source={message.content} /></span>
-				</div>
-			{/if}
-		{/each}
-		{#if loading}
-			<div class="message">
-				<span class="sender">assistant:</span>
-				<span class="text">loading...</span>
-			</div>
+	<div class="output">
+		{#if loading }
+			Loading
 		{/if}
+		{#if answer}
+			<h2>Solution</h2>
+			<SvelteMarkdown source={answer} />
+		{/if}
+
 	</div>
-	<div class="input-box">
-		<input type="text" placeholder="Type your message..." bind:value={newMessage} />
-		<button on:click={chat}>Send</button>
-	</div>
-</div>
+</main>
 
 <style lang="scss">
   main {
@@ -223,6 +224,10 @@
 				transition: all 0.2s ease-in-out;
 				cursor: pointer;
 				min-width: 12rem;
+				&:disabled {
+					cursor: not-allowed;
+					opacity: 0.8;
+				}
 			}
 			&:hover {
 				background: var(--gradient-reverse);
@@ -287,14 +292,27 @@
 			}
 		}
 		.output {
-			width: 100%;
+			width: calc(100% - 2rem);
 			margin: 1rem 0;
 			padding: 1rem 0;
 			border-radius: var(--curve-factor);
 			background: var(--inner-background);
 			display: flex;
 			flex-direction: column;
-			align-items: center;
+			padding: 1rem;
+			h2 {
+				color: var(--foreground);
+				margin: 1rem auto;
+				font-weight: 600;
+				font-size: 2rem;
+			}
+			:global(p), :global(pre), :global(ul) {
+				color: var(--foreground);
+				font-family: Sono;
+			}
+			:global(a) {
+				color: var(--accent);
+			}
 		}
   }
 
