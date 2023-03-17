@@ -1,7 +1,9 @@
 <script lang="ts">
 	import SvelteMarkdown from 'svelte-markdown';
+	import { slide } from 'svelte/transition';
 	import Icon from '$/lib/Icon.svelte';
 	import type { ChatMessage } from '$/types/chat.types';
+	import { proompts } from '$/data/proompts';
 
 	const tabs = ['Refactor', 'Find Bug', 'Explain', 'Generate'] as const;
 
@@ -13,16 +15,13 @@
 	};
 
 	const messageLog: MessageLog = {
-		'Refactor': [{ role: 'system', content: 'hi' }],
-		'Find Bug': [{ role: 'system', content: '' }],
-		'Explain': [{ role: 'system', content: '' }],
-		'Generate': [{ role: 'system', content: '' }],
+		'Refactor': [{ role: 'system', content: proompts['Refactor'] }],
+		'Find Bug': [{ role: 'system', content: proompts['Find Bug'] }],
+		'Explain': [{ role: 'system', content: proompts['Explain'] }],
+		'Generate': [{ role: 'system', content: proompts['Generate'] }],
 	};
 
 	async function chat(event: Event) {
-
-		
-
 		event.preventDefault();
 		loading = true;
 
@@ -122,16 +121,20 @@
 	</div>
 
 	<!-- Output -->
-	<div class="output">
-		{#if loading }
-			Loading
-		{/if}
-		{#if answer}
-			<h2>Solution</h2>
-			<SvelteMarkdown source={answer} />
-		{/if}
-
-	</div>
+	{#if loading || answer}
+		<div class="output" transition:slide>
+			{#if loading }
+				<h2>Loading</h2>
+				<span class="loader"></span>
+			{/if}
+			{#if answer}
+				<h2>Solution</h2>
+				<div class="md-content">
+					<SvelteMarkdown source={answer} />
+				</div>
+			{/if}
+		</div>
+	{/if}
 </main>
 
 <style lang="scss">
@@ -306,12 +309,50 @@
 				font-weight: 600;
 				font-size: 2rem;
 			}
-			:global(p), :global(pre), :global(ul) {
-				color: var(--foreground);
-				font-family: Sono;
+			.md-content {
+				background: var(--background);
+				border-radius: var(--curve-factor);
+				padding: 1rem 2rem;
+				:global(p), :global(pre), :global(ul), :global(ol), :global(li) {
+					color: var(--foreground);
+					font-family: Sono;
+				}
+				:global(a) {
+					color: var(--accent);
+				}
+				:global(pre) {
+					border-left: 4px solid var(--accent);
+					background: var(--transparent-accent);
+					padding: 0.5rem 1.5rem 0.5rem 0.5rem;
+					border-radius: var(--curve-factor);
+				}
 			}
-			:global(a) {
-				color: var(--accent);
+
+			.loader {
+				width: 16px;
+				height: 16px;
+				border-radius: 50%;
+				background: var(--accent);
+				position: relative;
+				margin: 1rem auto;
+			}
+			.loader:before,
+			.loader:after {
+				content: "";
+				position: absolute;
+				border-radius: 50%;
+				inset: 0;
+				background: var(--foreground);
+				transform: rotate(0deg) translate(30px);
+				animation: rotate 1s ease infinite;
+			}
+			.loader:after {
+				animation-delay: 0.5s
+			}
+			@keyframes rotate {
+				100% {transform: rotate(360deg) translate(30px)
+			}
+					
 			}
 		}
   }
