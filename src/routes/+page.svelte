@@ -2,17 +2,18 @@
 	import SvelteMarkdown from 'svelte-markdown';
 	import { slide } from 'svelte/transition';
 	import Icon from '$/lib/Icon.svelte';
-	import type { ChatMessage } from '$/types/chat.types';
+	import type { ChatMessage, TabDescription } from '$/types/chat.types';
 	import { proompts } from '$/data/proompts';
 	import { messageLog } from '$/data/MessageLogStore';
+	import { descriptions } from '$/data/TabDescriptions';
 
 	const tabs = ['Refactor', 'Find Bug', 'Explain', 'Generate'] as const;
 
 	let newMessage = '';
 	let loading = false;
 
-	async function chat(event: Event) {
 
+	const chat = async (event: Event) => {
 		event.preventDefault();
 		loading = true;
 
@@ -21,12 +22,10 @@
 			{ role: 'user', content: `${proompts[selectedTab]}\n\n${newMessage}` }
 		] satisfies ChatMessage[];
 
-		const res = await fetch('/', {
+		const chatGPTMessage = await fetch('/', {
 			method: 'POST',
 			body: JSON.stringify({ messages })
-		});
-
-		const chatGPTMessage = await res.json();
+		}).then((res) => res.json() as Promise<{ messages: ChatMessage[] }>);
 
 		loading = false;
 
@@ -43,37 +42,6 @@
 
 	const switchTab = (newTab: number) => {
 		selectedTab = tabs[newTab];
-	};
-
-	type Descriptions = {
-    [tab in typeof tabs[number]]: {
-			intro: string;
-			placeholder: string;
-			btnText: string;
-		};
-  };
-
-	const descriptions: Descriptions = {
-		Refactor: {
-			intro: 'The refactor tool will improve your pasted code, to make it more readable, efficient, or maintainable.',
-			placeholder: 'Paste your code to refactor here...',
-			btnText: 'Improve!'
-		},
-		'Find Bug': {
-			intro: 'The bug finding tool, will identify any issues that may be causing your code to fail, and suggest fixes.',
-			placeholder: 'Paste your code to debug here...',
-			btnText: 'Fix!'
-		},
-		'Explain': {
-			intro: 'The code explainer tool, will attempt to explain what your code is doing, and how it works.',
-			placeholder: 'Paste your code to generate an explanation of what\'s happening...',
-			btnText: 'Explain!'
-		},
-		Generate: {
-			intro: 'The generate tool, will generate code in your given language, based on your inputted prompt. You can also use this to generate code from a given example.',
-			placeholder: 'Write a prompt to generate code from here...',
-			btnText: 'Generate!'
-		},
 	};
 
 	$: tabTxt = descriptions[selectedTab];
