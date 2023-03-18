@@ -1,19 +1,12 @@
-import { writable, derived, type Readable } from 'svelte/store';
-import type { ChatMessage } from '$/types/chat.types';
+import { writable } from 'svelte/store';
+import type { MessageLog } from '$/types/chat.types';
 import { proompts } from '$/data/proompts';
 
 const tabs = ['Refactor', 'Find Bug', 'Explain', 'Generate'] as const;
 
-type MessageLog = {
-  [tab in typeof tabs[number]]: ChatMessage[];
-};
-
-const initialMessages: MessageLog = {
-  'Refactor': [{ role: 'system', content: proompts['Refactor'] }],
-  'Find Bug': [{ role: 'system', content: proompts['Find Bug'] }],
-  'Explain': [{ role: 'system', content: proompts['Explain'] }],
-  'Generate': [{ role: 'system', content: proompts['Generate'] }],
-};
-
+const initialMessages: MessageLog = tabs.reduce((acc, tab) => {
+  acc[tab] = [{ role: 'system', content: proompts[tab] }];
+  return acc;
+}, {} as MessageLog);
 
 export const messageLog = writable<MessageLog>(initialMessages);
