@@ -28,7 +28,7 @@ const config = {
       nodeAdapter(),
     ]),
     alias: {
-      '$src/*': 'src/*',
+      '$/*': 'src/*',
     },
   },
 };
