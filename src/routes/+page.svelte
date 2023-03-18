@@ -4,30 +4,21 @@
 	import Icon from '$/lib/Icon.svelte';
 	import type { ChatMessage } from '$/types/chat.types';
 	import { proompts } from '$/data/proompts';
+	import { messageLog } from '$/data/MessageLogStore';
 
 	const tabs = ['Refactor', 'Find Bug', 'Explain', 'Generate'] as const;
 
 	let newMessage = '';
 	let loading = false;
 
-	type MessageLog = {
-		[tab in typeof tabs[number]]: ChatMessage[];
-	};
-
-	const messageLog: MessageLog = {
-		'Refactor': [{ role: 'system', content: proompts['Refactor'] }],
-		'Find Bug': [{ role: 'system', content: proompts['Find Bug'] }],
-		'Explain': [{ role: 'system', content: proompts['Explain'] }],
-		'Generate': [{ role: 'system', content: proompts['Generate'] }],
-	};
-
 	async function chat(event: Event) {
+
 		event.preventDefault();
 		loading = true;
 
 		const messages = [
-			...messageLog[selectedTab],
-			{ role: 'user', content: newMessage }
+			...$messageLog[selectedTab],
+			{ role: 'user', content: `${proompts[selectedTab]}\n\n${newMessage}` }
 		] satisfies ChatMessage[];
 
 		const res = await fetch('/', {
@@ -39,10 +30,13 @@
 
 		loading = false;
 
-		messageLog[selectedTab] = [
-			...messageLog[selectedTab],
-			chatGPTMessage satisfies ChatMessage[],
-		];
+		messageLog.set({
+			...$messageLog,
+			[selectedTab]: [
+				...$messageLog[selectedTab],
+				chatGPTMessage satisfies ChatMessage[],
+			]
+		});
 	}
 
 	let selectedTab: typeof tabs[number] = 'Refactor';
@@ -84,7 +78,7 @@
 
 	$: tabTxt = descriptions[selectedTab];
 
-	$: answer = messageLog[selectedTab].reverse().find(msg => msg.role === 'assistant')?.content;
+	$: answer = $messageLog[selectedTab].reverse().find(msg => msg.role === 'assistant')?.content;
 
 </script>
 
