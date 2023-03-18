@@ -1,0 +1,12 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Sono';
+  background: var(--background);
+  transition: all ease-in-out 0.3s;
+  overflow-x: hidden;
+}
+::selection {
+  background: var(--accent);
+  color: var(--foreground);
+}

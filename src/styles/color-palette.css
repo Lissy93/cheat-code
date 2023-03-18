@@ -1,0 +1,14 @@
+
+:root {
+  --background: #0B1021;
+  --foreground: #ffffff;
+  --accent: #00CCB4;
+  --curve-factor: 6px;
+  --dimming-amount: 0.75;
+  --greyish: #092935;
+  --transparent-accent: #00CCB426;
+  --inner-background: #141B33;
+  --outer-background: #060913;
+  --gradient: linear-gradient(90deg, var(--accent) 20%, #00C9FF 100%);
+  --gradient-reverse: linear-gradient(120deg, var(--accent) 40%, #00C9FF 80%, var(--accent) 100%);
+}
