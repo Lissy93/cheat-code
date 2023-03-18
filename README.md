@@ -2,6 +2,14 @@
 <p align="center">
   <i>An AI-powered coding assistant, to generate, fix and improve code</i><br>
   <i>Built as a demo of OpenAI's GPT API</i><br>
+  <b><a href="https://cheat-code.as93.net/">cheat-code.as93.net</a></b>
+</p>
+<p align="center">
+  <a href="https://cheat-code.as93.net/">
+    <img width="600" src="https://i.ibb.co/V9Jp0c1/cheat-code-screenshot.png" />
+    <br>
+  </a>
+  <sup>Yes, the UI is really ugly</sup>
 </p>
 
 
@@ -13,7 +21,7 @@
 
 ```bash
 # 1. Clone the repo and cd into it (update username if you've forked)
-git clone git@github.com:Lissy93/cheat-code.git && cd devolio
+git clone git@github.com:Lissy93/cheat-code.git && cd cheat-code
 
 # 2. Install dependencies
 pnpm install
@@ -35,7 +43,7 @@ You can also build the site yourself `npm run build`, then either run `node buil
 
 Use the 1-click deploy to get up and running in seconds.
 
-[![Depoly Cheat Code to Netlify](https://img.shields.io/badge/Deploy-Netlify-%2330c8c9?style=for-the-badge&logo=netlify&labelColor=1e0e41 'Deploy Cheat Code to Netlify, via 1-Click Script')](https://app.netlify.com/start/deploy?repository=https://github.com/lissy93/cheat-code 'Deploy Cheat Code to Render, via 1-Click Script') [![Depoly Cheat Code to Render](https://img.shields.io/badge/Deploy-Render-%236c83fa?style=for-the-badge&logo=render&labelColor=1e0e41&logoColor=6c83fa)](https://render.com/deploy?repo=https://github.com/lissy93/cheat-code 'Deploy Cheat Code to Render, via 1-Click Script') [![Deploy Cheat Code to Railway](https://img.shields.io/badge/Deploy-Railway-%23853bce?style=for-the-badge&logo=railway&labelColor=1e0e41&logoColor=853bce)](https://railway.app/new/template/hROvhb 'Deploy Cheat Code to Railway, via 1-Click Script') [![Deploy Cheat Code to Vercel](https://img.shields.io/badge/Deploy-Vercel-%23ffffff?style=for-the-badge&logo=vercel&labelColor=1e0e41)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Flissy93%2Fcheat-code&env=GITHUB_TOKEN,TWITTER_TOKEN&project-name=devolio&repository-name=devolio_My-Developer-Portfolio 'Deploy Cheat Code to Vercel, via 1-Click Script')
+[![Depoly Cheat Code to Netlify](https://img.shields.io/badge/Deploy-Netlify-%2330c8c9?style=for-the-badge&logo=netlify&labelColor=1e0e41 'Deploy Cheat Code to Netlify, via 1-Click Script')](https://app.netlify.com/start/deploy?repository=https://github.com/lissy93/cheat-code 'Deploy Cheat Code to Render, via 1-Click Script') [![Depoly Cheat Code to Render](https://img.shields.io/badge/Deploy-Render-%236c83fa?style=for-the-badge&logo=render&labelColor=1e0e41&logoColor=6c83fa)](https://render.com/deploy?repo=https://github.com/lissy93/cheat-code 'Deploy Cheat Code to Render, via 1-Click Script') [![Deploy Cheat Code to Railway](https://img.shields.io/badge/Deploy-Railway-%23853bce?style=for-the-badge&logo=railway&labelColor=1e0e41&logoColor=853bce)](https://railway.app/new/template/hROvhb 'Deploy Cheat Code to Railway, via 1-Click Script') [![Deploy Cheat Code to Vercel](https://img.shields.io/badge/Deploy-Vercel-%23ffffff?style=for-the-badge&logo=vercel&labelColor=1e0e41)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Flissy93%2Fcheat-code&env=GITHUB_TOKEN,TWITTER_TOKEN&project-name=cheat-code&repository-name=cheat-code_My-Developer-Portfolio 'Deploy Cheat Code to Vercel, via 1-Click Script')
 
 ### Docker Deploy
 
@@ -47,7 +55,7 @@ There's a multi-arch [`Dockerfile`](https://github.com/Lissy93/cheat-code/blob/m
 
 ### Report an Issue
 
-Found something that's not working? [Open an issue](https://github.com/Lissy93/devolio/issues/new/choose), and describe the problem, steps to reproduce alond with expected and actual output. If relevant, also include details about your environment. I'll try and fix / respond to any tickets within 48-hours.
+Found something that's not working? [Open an issue](https://github.com/Lissy93/cheat-code/issues/new/choose), and describe the problem, steps to reproduce alond with expected and actual output. If relevant, also include details about your environment. I'll try and fix / respond to any tickets within 48-hours.
 
 ### Contributing
 
@@ -56,7 +64,7 @@ For Code of Conduct, see [Contributor Convent](https://www.contributor-covenant.
 
 To get started, fork the repo, make your changes, add, commit and push the code, then come back here to open a pull request. If you're new to GitHub or open source, [this guide](https://www.freecodecamp.org/news/how-to-make-your-first-pull-request-on-github-3#let-s-make-our-first-pull-request-) or the [git docs](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) may help you get started, but feel free to reach out if you need any support.
 
-[![Submit a PR](https://img.shields.io/badge/Submit_a_PR-GitHub-%23060606?style=for-the-badge&logo=github&logoColor=fff)](https://github.com/Lissy93/devolio/compare)
+[![Submit a PR](https://img.shields.io/badge/Submit_a_PR-GitHub-%23060606?style=for-the-badge&logo=github&logoColor=fff)](https://github.com/Lissy93/cheat-code/compare)
 
 ### Support
 
