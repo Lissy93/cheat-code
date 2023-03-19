@@ -1,7 +1,7 @@
 import type { tabs } from '$/types/chat.types.d';
 
 type Proompts = {
-	[tab in typeof tabs[number]]: string;
+  [tab in typeof tabs[number]]: string;
 };
 
 const appendToPrompt = `
@@ -11,7 +11,7 @@ const appendToPrompt = `
 `;
 
 export const proompts: {
-	[tab in typeof tabs[number]]: string;
+  [tab in typeof tabs[number]]: string;
 } = {
   Refactor: `
     I would like you to act as a code reviewer, and refactor code snippets.

@@ -1,14 +1,18 @@
-
 :root {
-  --background: #0B1021;
+  --background: #0b1021;
   --foreground: #ffffff;
-  --accent: #00CCB4;
+  --accent: #00ccb4;
   --curve-factor: 6px;
   --dimming-amount: 0.75;
   --greyish: #092935;
-  --transparent-accent: #00CCB426;
-  --inner-background: #141B33;
+  --transparent-accent: #00ccb426;
+  --inner-background: #141b33;
   --outer-background: #060913;
-  --gradient: linear-gradient(90deg, var(--accent) 20%, #00C9FF 100%);
-  --gradient-reverse: linear-gradient(120deg, var(--accent) 40%, #00C9FF 80%, var(--accent) 100%);
+  --gradient: linear-gradient(90deg, var(--accent) 20%, #00c9ff 100%);
+  --gradient-reverse: linear-gradient(
+    120deg,
+    var(--accent) 40%,
+    #00c9ff 80%,
+    var(--accent) 100%
+  );
 }

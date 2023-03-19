@@ -5,6 +5,10 @@
   import Footer from '$/lib/Footer.svelte';
 </script>
 
+<svelte:head>
+  <title>Cheat_Code</title>
+</svelte:head>
+
 <slot />
 
 <Footer />
